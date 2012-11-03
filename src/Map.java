@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import javax.swing.ImageIcon;
@@ -37,8 +41,9 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 		
 		// import background image
 		// this needs to be changed to a more general path
-		ImageIcon i = new ImageIcon("C:\\Users\\Stratos\\VGDC\\Warring Summoners\\img\\Blue background.png");
+		ImageIcon i = new ImageIcon("src/Blue background.png");
 		background = i.getImage();
+		
 		
 		//time = new Timer(5, this);
 		//time.start();
@@ -56,22 +61,21 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent e) {
 		hero.handleAction(e);
 		// TODO Auto-generated method stub
-		System.out.println("pressed");
-		repaint();
+		//System.out.println("pressed");
+		//repaint();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		hero.cancelAction(e);
 		System.out.println("released");
-		repaint();
-		// do nothing
+		//repaint();
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("typed");
-		repaint();
-		// do nothing
+		//System.out.println("typed");
+		///repaint();
 	}
 	
 	@Override
