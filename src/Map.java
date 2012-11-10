@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -18,8 +19,9 @@ import javax.swing.JPanel;
 public class Map extends JPanel implements KeyListener, ActionListener {
 
 	private Summoner hero;
+	private static ArrayList<Summon> summons = new ArrayList<Summon>();
 	private Image background;
-	public int rightBound, topBound, lowerBound, leftBound;
+	public static int rightBound, topBound, lowerBound, leftBound;
 	
 	//Timer time;
 	//Thread draw;
@@ -29,13 +31,15 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 	public Map() {
 		
 		hero = new Summoner();
+		summons.add(new Monster_1());
+		
 		setFocusable(true);
 		
 		// set map bounds
 		rightBound = 800;
 		leftBound = 0;
-		topBound = 350;
-		lowerBound = 0;
+		topBound = 0;
+		lowerBound = 300;
 		
 		this.addKeyListener(this);
 		
@@ -84,9 +88,17 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 		repaint();
 	}
 	
+	public static void addSummon(Summon newSummon){
+		summons.add(newSummon);
+	}
+	
 	public void update(){
 		// update all units
 		hero.update();
+		
+		for(int i = 0; i < summons.size(); i++){
+			summons.get(i).update();
+		}
 	}
 	
 	public void paint(Graphics g){
@@ -100,8 +112,14 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 		
 		// draw background
 		graphics.drawImage(background, 0, 0, null);
-		graphics.drawImage(hero.getImage(), hero.getX(), hero.getY(), null);
 		
+		// draw summons
+		for(int i = 0; i < summons.size(); i++){
+			graphics.drawImage(summons.get(i).getImage(), summons.get(i).getX(), summons.get(i).getY(), null);
+		}
+		
+		// draw player
+		graphics.drawImage(hero.getImage(), hero.getX(), hero.getY(), null);
 	}
 
 	/*

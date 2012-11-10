@@ -11,6 +11,8 @@ public class Summoner {
 	private Image img;
 	boolean left, right, jump;
 	
+	private int playerSize = 50;
+	
 	public Summoner(){
 		x = 0; // initial x position
 		y = 300; // initial y position
@@ -34,24 +36,16 @@ public class Summoner {
 	public void handleAction(KeyEvent e){
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right = true;
-			if( x + speed < 800){
-				x += speed;
-			}
 			//System.out.println("left");
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_LEFT){
 			left = true;
-			if( x - speed > 0){
-				x -= speed;
-			}
 			//System.out.println("right");
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_UP){
 			jump = true;
-			if(y >= 295){
-				dy += jumpstrength;
-			}
 		}
+		
 	}
 	
 	public void cancelAction(KeyEvent e){
@@ -64,25 +58,33 @@ public class Summoner {
 		else if(e.getKeyCode() == KeyEvent.VK_UP){
 			jump = false;
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_1){
+			if(mana >= Monster_1.manaCost){
+				Summon newSummon = new Monster_1();
+				newSummon.setX(x);
+				Map.addSummon(newSummon);
+				mana -= Monster_1.manaCost;
+			}
+		}
 	}
 	
 	// note that this will be called many times a second.  mana and manaRegen should probably be changed to doubles
 	public void update(){
 		
 		if(right == true){
-			if( x + speed < 800){
+			if( x < Map.rightBound - playerSize){
 				x += speed;
 			}
 			//System.out.println("left");
 		}
 		else if(left == true){
-			if( x - speed > 0){
+			if( x > 0){
 				x -= speed;
 			}
 			//System.out.println("right");
 		}
-		else if(jump == true){
-			if(y >= 295){
+		if(jump == true){
+			if(y >= 300){
 				dy = jumpstrength;
 			}
 		}
