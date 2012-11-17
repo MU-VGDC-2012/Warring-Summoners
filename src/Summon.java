@@ -15,6 +15,9 @@ public interface Summon {
 	public void setTeam(int newTeam);
 	public Image getImage();
 	public void update();
+	public void update(Summoner player);
 	public void death();
 	public int getManaCost();
+	public int getAI();
+	public void changeAI();
 }

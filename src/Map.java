@@ -64,6 +64,12 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		hero.handleAction(e);
+		
+		if(e.getKeyCode() == KeyEvent.VK_A){
+			for(int i = 0; i < summons.size(); i++){
+				summons.get(i).changeAI();
+			}
+		}
 		// TODO Auto-generated method stub
 		//System.out.println("pressed");
 		//repaint();
@@ -97,7 +103,7 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 		hero.update();
 		
 		for(int i = 0; i < summons.size(); i++){
-			summons.get(i).update();
+			summons.get(i).update(hero);
 		}
 	}
 	
