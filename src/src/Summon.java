@@ -1,4 +1,6 @@
+package src;
 import java.awt.Image;
+
 
 
 public interface Summon {
@@ -20,4 +22,5 @@ public interface Summon {
 	public int getManaCost();
 	public int getAI();
 	public void changeAI();
+	public boolean isDead();
 }

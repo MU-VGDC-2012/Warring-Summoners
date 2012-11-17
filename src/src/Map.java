@@ -1,3 +1,4 @@
+package src;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,6 +15,7 @@ import javax.swing.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
 
 
 public class Map extends JPanel implements KeyListener, ActionListener {
@@ -104,6 +106,12 @@ public class Map extends JPanel implements KeyListener, ActionListener {
 		
 		for(int i = 0; i < summons.size(); i++){
 			summons.get(i).update(hero);
+		}
+		
+		// Check for death
+		for(int x = 0; x < summons.size(); x++){
+			if(summons.get(x).isDead())
+				summons.remove(x);
 		}
 	}
 	

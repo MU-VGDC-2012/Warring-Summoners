@@ -1,6 +1,9 @@
+package src;
+
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+
 
 
 public class Monster_1 implements Summon {
@@ -15,6 +18,7 @@ public class Monster_1 implements Summon {
 	private int attackDamage = 5;
 	private int attackDelay = 10;
 	private int team;
+	private boolean dead = false;
 	public static int manaCost = 10;
 	
 	private int ai;
@@ -134,7 +138,14 @@ public class Monster_1 implements Summon {
 				x -= speed;
 			}
 		}
+		if(hp == 0){
+			dead = true;
+		}
+		hp--;
+	
 	}
+	
+	
 	
 	@Override
 	public void update() {
@@ -158,6 +169,11 @@ public class Monster_1 implements Summon {
 				x -= speed;
 			}
 		}
+		
+		if(hp == 0){
+			dead = true;
+		}
+		hp--;
 	}
 
 	@Override
@@ -195,6 +211,10 @@ public class Monster_1 implements Summon {
 	public void changeAI() {
 		ai = (ai + 1) % 3;
 		
+	}
+	
+	public boolean isDead(){
+		return dead;
 	}
 
 }
