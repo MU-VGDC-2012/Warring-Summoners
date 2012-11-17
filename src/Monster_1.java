@@ -17,12 +17,22 @@ public class Monster_1 implements Summon {
 	private int team;
 	public static int manaCost = 10;
 	
+	private int ai;
+	private final static int ATTACK = 0;
+	private final static int GUARD = 1;
+	private final static int FOLLOW = 2;
+	
+	private boolean stop;
+	
 	private Image img;
 	
 	public Monster_1(){
 		hp = maxHP;
 		goRight = true;
 		team = 1;
+		
+		ai = 2;
+		stop = false;
 
 		ImageIcon i = new ImageIcon("src/player.png");
 		img = i.getImage();
@@ -84,6 +94,49 @@ public class Monster_1 implements Summon {
 	}
 
 	@Override
+	public void update(Summoner player) {
+		// update movement
+
+		if(ai == ATTACK){
+			if(x <= 0){
+				goRight = true;
+				stop = false;
+			}
+			else if(x >= Map.rightBound - summonSize){
+				goRight = false;
+				stop = false;
+			}
+			
+			y = Map.lowerBound;
+		}
+		else if(ai == FOLLOW){
+			if(x < player.getX()){
+				goRight = true;
+				stop = false;
+			}
+			else if(x > player.getX()){
+				goRight = false;
+				stop = false;
+			}
+			else{
+				stop = true;
+			}
+		}
+		else{
+			stop = true;
+		}
+		
+		if(!stop){
+			if(goRight){
+				x += speed; 
+			}
+			else{
+				x -= speed;
+			}
+		}
+	}
+	
+	@Override
 	public void update() {
 		// update movement
 
@@ -93,14 +146,17 @@ public class Monster_1 implements Summon {
 		else if(x >= Map.rightBound - summonSize){
 			goRight = false;
 		}
-		
+			
 		y = Map.lowerBound;
 		
-		if(goRight){
-			x += speed; 
-		}
-		else{
-			x -= speed;
+		
+		if(ai != GUARD){
+			if(goRight){
+				x += speed; 
+			}
+			else{
+				x -= speed;
+			}
 		}
 	}
 
@@ -112,7 +168,6 @@ public class Monster_1 implements Summon {
 
 	@Override
 	public void setTeam(int newTeam) {
-		// TODO Auto-generated method stub
 		team = newTeam;
 	}
 
@@ -129,6 +184,17 @@ public class Monster_1 implements Summon {
 	@Override
 	public int getManaCost() {
 		return manaCost;
+	}
+
+	@Override
+	public int getAI() {
+		return ai;
+	}
+
+	@Override
+	public void changeAI() {
+		ai = (ai + 1) % 3;
+		
 	}
 
 }
